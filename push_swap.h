@@ -1,0 +1,62 @@
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
+
+# include <stdio.h>
+# include <unistd.h>
+# include <string.h>
+# include <stdlib.h>
+# include <limits.h>
+
+//MINUTE 23, BEFORE CONTINUING, I HAVE TO MAKE SOME UTILS FUNCTIONS THAT ARE NOT
+//RELATED TO THE ALGORITHM ITSELF, THESE FUNCTIONS CAN BE FOUND IN GITHUB TUTORIAL
+//ERROR HANDLING (PRINT "error" AND EXIT)
+//MOVEMENTS (WILL WAIT TO MAKE THEM UNTIL I CONFIRM SHE DOESNT COVER THEM)
+//OBTAIN MIN AND MAX NODES (SHOULD BE EASY, LST[0] AND LST[LST_LAST], MUST TEST)
+
+
+
+//HOW TO CHECK THERE ARE AT LEAST TWO NON-EMPTY ARGUMENTS?
+//VALUES THAT ARE EMPTY ARE DETECTED AS 0, IF THERE ARE MORE THAN 2 EMPTY
+//VALUES, BOTH COUNT AS 0 AND BREAK THE PROGRAM BECAUSE THE REPEAT FUNCTION
+//GETS TRIGGERED. HOWEVER THEY DONT COUNT TO TOTAL_NUMS.
+//TO STOP THIS, MUST MAKE THE PROGRAM COMPLETELY IGNORE EMPTY VALUES, THEY
+//SHOULDNT BE STORED IN NUMS.
+
+//CHECK CHATGPT FOR SOLUTION, CONVO PUSHUP.
+
+
+//CHECK OTHER IMPLEMENTATIONS OF PUSH SWAP TO SEE IF PEOPLE USE THE LST LIBFT
+//FUNCTIONS OR IF THEY CREATE NEW ONES, THIS IS TO SEE IF THEY CAN BE REUSED SOMEHOW.
+
+//SHOULD I DIRECTLY CALL EXIT EVERY TIME I GET AN ERROR THAT SHOULD CLOSE THE
+//PROGRAM WITHOUT FREEING EVERYTHING (NUMS ARRAY, STACKS, ETC)? OR SHOULD I FREE
+//ANYWAY? IS IT BAD PRACTICE, DOES IT MATTER?
+
+//DO I NEED TO SKIP ALL TRAILING SPACES OR NOT? IF SO, ADD A WHILE (I == ' ') I++;
+//INSIDE THE SUPER ATOL
+
+//SHOULD I ALLOCATE + 1 IN THE NUMS CALLOC, OR NOT? SEEMS NOT, IT WORKS ANYWAY,
+//IN FACT +1 STORES AND EXTRA 4 BYTES THAT ARENT USED, HOWEVER I DONT GET LEAKS
+//BUT WILL LEAVE IT FOR NOW.
+
+typedef struct	s_stack
+{
+	int	val;
+	struct s_stack	*next;
+}		t_stack;
+
+void	print_array(int *nums, int size);
+void	ft_lstdelone(t_stack *lst);
+void	ft_lstclear(t_stack **lst);
+void	ft_print_lst(t_stack *lst);
+t_stack  *ft_lstlast(t_stack *lst);
+int	ft_lstsize(t_stack *lst);
+t_stack  *ft_lstnew(int content);
+void    ft_lstadd_back(t_stack **lst, t_stack *new);
+int	get_total_nums(char **av);
+int	check_repeat(int *nums, int size);
+int	super_atol(char *str, int *nums);
+int	*copy_args(char **av, int *nums);
+void	struct_init(t_stack **stack_a, int *nums, int size);
+
+#endif

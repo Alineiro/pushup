@@ -1,23 +1,4 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
-#include <limits.h>
-
-//HOW TO CHECK LENGTH OF AN INT ARRAY? ASK CHAT GPT, NECESARY, CHECK WITH PRINT ARRAY FUNC.
-//ALSO HAVE TO MAKE A FUNCTION TO CHECK IF NUMBERS ARE REPEATED OR NOT, SHOULD BE EASY.
-
-void	print_array(int *nums, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		printf("number: '%d' is: '%d'\n",i,nums[i]);
-		i++;
-	}
-}
+#include "push_swap.h"
 
 int	get_total_nums(char **av)
 {
@@ -32,6 +13,11 @@ int	get_total_nums(char **av)
 	{
 		j = 0;
 		bol = 0;
+		if (!av[i][0])
+		{
+			i++;
+			continue ;
+		}
 		while (av[i][j])
 		{
 			if (av[i][j] != ' ')
@@ -65,7 +51,7 @@ int	check_repeat(int *nums, int size)
 		{
 			if (nums[i] == nums[j])
 			{
-				printf("num[i]: '%d', detected to be = num[j]: '%d'\n",nums[i],nums[j]);
+				printf("num[%d]: '%d', detected to be = num[%d]: '%d'\n",i,nums[i],j,nums[j]);
 				return (-1);
 			}
 			j++;
@@ -75,7 +61,7 @@ int	check_repeat(int *nums, int size)
 	return (1);
 }
 
-int	super_atoi(char *str, int *nums)
+int	super_atol(char *str, int *nums)
 {
 	long	n;
 	int	i;
@@ -84,8 +70,6 @@ int	super_atoi(char *str, int *nums)
 	i = 0;
 	sign = 1;
 	n = 0;
-	while (str[i] == ' ' && str[i])
-		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
@@ -94,10 +78,9 @@ int	super_atoi(char *str, int *nums)
 	}
 	while (str[i] >= '0' && str[i] <= '9' && str[i])
 	{
-		n = (n * 10) + (str[i] - '0');
+		n = (n * 10) + (str[i++] - '0');
 		if (((n * sign) > INT_MAX) || ((n * sign) < INT_MIN))
 			return (-1);
-		i++;
 	}
 	if (str[i] == '\0')
 	{
@@ -120,40 +103,29 @@ int	*copy_args(char **av, int *nums)
 		exit(EXIT_FAILURE);
 	while (av[i])
 	{
-		if (super_atoi(av[i], &nums[i - 1]) == -1)
+		if (av[i] && av[i][0])
 		{
-			printf("atoi returned -1, num: '%s' not valid\n",av[i]);
-			free(nums);
-			exit(EXIT_FAILURE);
+			if (super_atol(av[i], &nums[i - 1]) == -1)
+			{
+				printf("atoi returned -1, num: '%s' not valid\n",av[i]);
+				free(nums);
+				exit(EXIT_FAILURE);
+			}
 		}
 		i++;
 	}
 	return (nums);
 }
 
-int	main(int ac, char **av)
+void	struct_init(t_stack **stack_a, int *nums, int size)
 {
-	int	*nums;
-	int	size;
+	int	i;
 
-	if (ac <= 2)
+	i = 0;
+	while (i < size)
 	{
-		printf("input more arguments\n");
-		exit(EXIT_FAILURE);
+		printf("allocates list, nums[i] == '%d'\n",nums[i]);
+		ft_lstadd_back(stack_a, ft_lstnew(nums[i]));
+		i++;
 	}
-	nums = copy_args(av, nums);
-	if (!nums)
-	{
-		printf("failure in copying\n");
-		exit(EXIT_FAILURE);
-	}
-	size = get_total_nums(av);
-	if (check_repeat(nums, size) == -1)
-	{
-		printf("numbers are repeated\n");
-		free(nums);
-		exit(EXIT_FAILURE);
-	}
-	print_array(nums, size);
-	return (free(nums), 0);
 }
