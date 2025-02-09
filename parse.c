@@ -61,6 +61,27 @@ int	check_repeat(int *nums, int size)
 	return (1);
 }
 
+/*
+int	check_sort(int *nums, int size)
+{
+	int	i;
+
+	i = 0;
+	while (nums[i] < nums[i + 1] && i < size)
+	{
+		printf("nums['%d']: '%d' is < to nums[i+1->'%d']: '%d'\n",i,nums[i],(i+1),nums[i + 1]);
+		i++;
+	}
+	if (i == size - 1)
+	{
+		printf("array is sorted, nothing should be done\n");
+		return (-1);
+	}
+	printf("array isnt sorted, sorting should begin\n");
+	return (1);
+}
+*/
+
 int	super_atol(char *str, int *nums)
 {
 	long	n;
@@ -98,7 +119,7 @@ int	*copy_args(char **av, int *nums)
 	i = 1;
 	total_nums = get_total_nums(av);
 	printf("val of total_nums: '%d'\n",total_nums);
-	nums = (int *)calloc((total_nums + 1), sizeof(int));
+	nums = (int *)calloc((total_nums), sizeof(int));
 	if (!nums)
 		exit(EXIT_FAILURE);
 	while (av[i])

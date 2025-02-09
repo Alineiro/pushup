@@ -51,6 +51,24 @@ int	ft_lstsize(t_stack *lst)
 	return (lcount);
 }
 
+int	check_sort(t_stack *lst)
+{
+	if (!lst)
+		return (-1);
+	while (lst->next)
+	{
+		printf("testing value lst->val: '%d' and lst->next->val: '%d'\n",lst->val,lst->next->val);
+		if (lst->val > lst->next->val)
+		{
+			printf("lst->val: '%d' is < to lst->next->val: '%d', so lst is not sorted\n",lst->val,lst->next->val);
+			return (1);
+		}
+		lst = lst->next;
+	}
+	printf("lst is sorted\n");
+	return (-1);
+}
+
 t_stack  *ft_lstnew(int content)
 {
         t_stack  *newn;
@@ -60,6 +78,7 @@ t_stack  *ft_lstnew(int content)
                 return (newn = NULL, NULL);
         newn->val = content;
         newn->next = NULL;
+	newn->prev = NULL;
         return (newn);
 }
 
@@ -81,5 +100,6 @@ void    ft_lstadd_back(t_stack **lst, t_stack *new)
 		printf("val assigned to last node\n");
                 last = ft_lstlast(*lst);
                 last->next = new;
+		new->prev = last;
         }
 }

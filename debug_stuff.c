@@ -7,7 +7,7 @@ void	ft_print_lst(t_stack *lst)
 	i = 0;
 	if (!lst)
 	{
-		printf("Empty List.\n");
+		printf("Empty List.\n\n");
 		return;
 	}
 	while (lst->next != NULL)
@@ -16,7 +16,7 @@ void	ft_print_lst(t_stack *lst)
 		i++;
 		lst = lst->next;
 	}
-	printf("Val of '%d' node is: '%d'\n", i, (int)lst->val);
+	printf("Val of '%d' node is: '%d'\n\n", i, (int)lst->val);
 }
 
 void	print_array(int *nums, int size)
