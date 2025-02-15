@@ -19,24 +19,33 @@ void	reverse_rotate(t_stack **stack)
 	last->next->prev = last;
 }
 
-void	rra(t_stack **a, int print_check)
+void	rra(t_stack **a, bool print_check)
 {
 	reverse_rotate(a);
-	if (print_check == 1)
+	if (print_check == true)
 		write(1, "rra\n", 4);
 }
 
-void	rrb(t_stack **b, int print_check)
+void	rrb(t_stack **b, bool print_check)
 {
 	reverse_rotate(b);
-	if (print_check == 1)
+	if (print_check == true)
 		write(1, "rrb\n", 4);
 }
 
-void	rrr(t_stack **a, t_stack **b, int print_check)
+void	rrr(t_stack **a, t_stack **b, bool print_check)
 {
 	reverse_rotate(a);
 	reverse_rotate(b);
-	if (print_check == 1)
+	if (print_check == true)
 		write(1, "rrr\n", 4);
+}
+
+void	r_rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest)
+{
+	printf("rotate both function is called\n");
+	while (*stack_b != cheapest->target && *stack_a != cheapest)
+		rrr(stack_a, stack_b, true);
+	get_idx_median(*stack_a);
+	get_idx_median(*stack_b);
 }

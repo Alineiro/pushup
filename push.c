@@ -28,16 +28,16 @@ void	push(t_stack **dst, t_stack **src)
 	}
 }
 
-void	pa(t_stack **a, t_stack **b, int print_check)
+void	pa(t_stack **a, t_stack **b, bool print_check)
 {
 	push(a, b);
-	if (print_check == 1)
+	if (print_check == true)
 		write(1, "pa\n", 3);
 }
 
-void	pb(t_stack **b, t_stack **a, int print_check)
+void	pb(t_stack **b, t_stack **a, bool print_check)
 {
 	push(b, a);
-	if (print_check == 1)
+	if (print_check == true)
 		write(1, "pb\n", 3);
 }

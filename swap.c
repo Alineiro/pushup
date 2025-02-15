@@ -16,24 +16,24 @@ void	swap(t_stack **head)
 	(*head)->prev = NULL;
 }
 
-void	sa(t_stack **a, int print_check)
+void	sa(t_stack **a, bool print_check)
 {
 	swap(a);
-	if (print_check == 1)
+	if (print_check == true)
 		write(1, "sa\n", 3);
 }
 
-void	sb(t_stack **b, int print_check)
+void	sb(t_stack **b, bool print_check)
 {
 	swap(b);
-	if (print_check == 1)
+	if (print_check == true)
 		write(1, "sb\n", 3);
 }
 
-void	ss(t_stack **a, t_stack **b, int print_check)
+void	ss(t_stack **a, t_stack **b, bool print_check)
 {
 	swap(a);
 	swap(b);
-	if (print_check == 1)
+	if (print_check == true)
 		write(1, "ss\n", 3);
 }

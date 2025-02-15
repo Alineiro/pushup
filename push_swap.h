@@ -5,20 +5,14 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <limits.h>
 
-//MINUTE 27, BEFORE CONTINUING, I HAVE TO MAKE SOME UTILS FUNCTIONS THAT ARE NOT
-//RELATED TO THE ALGORITHM ITSELF, THESE FUNCTIONS CAN BE FOUND IN GITHUB TUTORIAL
-//EASY ERROR HANDLING (PRINT "error" AND EXIT)
-//SHOULD BE DONE MOVEMENTS (WILL WAIT TO MAKE THEM UNTIL I CONFIRM SHE DOESNT COVER THEM)
-//??? OBTAIN MIN AND MAX NODES (SHOULD BE EASY, LST[0] AND LST[LST_LAST], MUST TEST)
+//SHOULD BE FINISHED, HAVE TO ADD REMAINING FUNCTIONS TO .H, AND AFTER THAT
+//IT SHOULD BE READY. THERE MIGHT BE MANY ISSUES BECAUSE I CHANGE THE WAY I 
+//MANAGE A FEW THINGS, MAINLY BECAUSE OF MY USAGE OF INTS INSTEAD OF BOOLEANS.
 
-//PROBLEM WITH MOVEMENTS EXECUTING WHEN LISTS DO NOT HAVE MORE THAN ONE NODE,
-//CAUSING AN ERROR OF INVALID USAGE OF UNALLOCATED VALUE, (VALGRIND), NEEDS MORE
-//TESTING, SO FAR I ONLY SEE IT WHEN EXECUTING RRR WHEN STACK_B HAS ONLY ONE VALUE,
-//NEED TO UNDERSTAND WHY (LIKELY ADD A CHECK IF (STACK_X || LSTSIZE(STACK_X > 1), ETC).
-//HOWEVER, I DONT KNOW IF THIS IS MANAGED BY THE ALGORITHM ITSELF, AND THATS WHY
-//THE GITHUBS DONT MANAGE THE CASE.
+//MISSING ADDING EASY ERROR HANDLING FUNCTIONS (PRINT "error" AND EXIT)
 
 //HOW TO CHECK THERE ARE AT LEAST TWO NON-EMPTY ARGUMENTS?
 //VALUES THAT ARE EMPTY ARE DETECTED AS 0, IF THERE ARE MORE THAN 2 EMPTY
@@ -30,6 +24,10 @@
 //CHECK CHATGPT FOR SOLUTION, CONVO PUSHUP.
 
 
+//ID LIKE TO UNDERSTAND BETTER WHY ARE THE STACKS PASSED WITH A *, WITHOUT IT,
+//LIKE (*STACK), ETC. MY ISSUE WITH UNDERSTANDING HAPPENS MAINLY IN THE 
+//SORTING AND MOVEMENT FUNCTIONS, ASK CHATGPT I GUESS.
+
 //SHOULD I DIRECTLY CALL EXIT EVERY TIME I GET AN ERROR THAT SHOULD CLOSE THE
 //PROGRAM WITHOUT FREEING EVERYTHING (NUMS ARRAY, STACKS, ETC)? OR SHOULD I FREE
 //ANYWAY? IS IT BAD PRACTICE, DOES IT MATTER?
@@ -37,17 +35,13 @@
 //DO I NEED TO SKIP ALL TRAILING SPACES OR NOT? IF SO, ADD A WHILE (I == ' ') I++;
 //INSIDE THE SUPER ATOL
 
-//SHOULD I ALLOCATE + 1 IN THE NUMS CALLOC, OR NOT? SEEMS NOT, IT WORKS ANYWAY,
-//IN FACT +1 STORES AND EXTRA 4 BYTES THAT ARENT USED, HOWEVER I DONT GET LEAKS
-//SO I WILL LEAVE IT FOR NOW.
-
 typedef struct	s_stack
 {
 	int	val;
 	int	idx;
 	int	cost;
-	int	median;
-	int	cheap;
+	bool	median;
+	bool	cheapest;
 	struct s_stack	*target;
 	struct s_stack	*next;
 	struct s_stack	*prev;
@@ -63,6 +57,8 @@ void	ft_print_lst(t_stack *lst);
 //
 void	ft_lstdelone(t_stack *lst);
 void	ft_lstclear(t_stack **lst);
+t_stack	*find_lstmin(t_stack *stack);
+t_stack	*find_lstmax(t_stack *stack);
 t_stack  *ft_lstlast(t_stack *lst);
 int	ft_lstsize(t_stack *lst);
 t_stack  *ft_lstnew(int content);
@@ -82,20 +78,40 @@ void	struct_init(t_stack **stack_a, int *nums, int size);
 //MOVEMENT FUNCTIONS
 //
 void	push(t_stack **dst, t_stack **src);
-void	pa(t_stack **a, t_stack **b, int print_check);
-void	pb(t_stack **b, t_stack **a, int print_check);
+void	pa(t_stack **a, t_stack **b, bool print_check);
+void	pb(t_stack **b, t_stack **a, bool print_check);
 void	reverse_rotate(t_stack **stack);
-void	rra(t_stack **a, int print_check);
-void	rrb(t_stack **b, int print_check);
-void	rrr(t_stack **a, t_stack **b, int print_check);
+void	rra(t_stack **a, bool print_check);
+void	rrb(t_stack **b, bool print_check);
+void	rrr(t_stack **a, t_stack **b, bool print_check);
+void	r_rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest);
 void	rotate(t_stack **stack);
-void	ra(t_stack **a, int print_check);
-void	rb(t_stack **b, int print_check);
-void	rr(t_stack **a, t_stack **b, int print_check);
+void	ra(t_stack **a, bool print_check);
+void	rb(t_stack **b, bool print_check);
+void	rr(t_stack **a, t_stack **b, bool print_check);
+void	rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest);
 void	swap(t_stack **head);
-void	sa(t_stack **a, int print_check);
-void	sb(t_stack **b, int print_check);
-void	ss(t_stack **a, t_stack **b, int print_check);
+void	sa(t_stack **a, bool print_check);
+void	sb(t_stack **b, bool print_check);
+void	ss(t_stack **a, t_stack **b, bool print_check);
+//
+
+//SORTING FUNCTIONS
+//
+void	three_sort(t_stack **stack_a);
+void	set_target_stack_a(t_stack *stack_a, t_stack *stack_b);
+void	set_target_stack_b(t_stack *stack_a, t_stack *stack_b);
+void	init_nodes_stack_a(t_stack *stack_a, t_stack *stack_b);
+void	init_nodes_stack_b(t_stack *stack_a, t_stack *stack_b);
+void	analyse_cost_stack_a(t_stack *stack_a, t_stack *stack_b);
+void	get_idx_median(t_stack *stack);
+void	set_cheapest_node(t_stack *stack);
+t_stack	*get_cheapest_node(t_stack *stack);
+void	put_min_on_top(t_stack **stack_a);
+void	push_prep(t_stack **stack, t_stack *cheapest, char stack_id);
+void	move_a_to_b(t_stack **stack_a, t_stack **stack_b);
+void	move_b_to_a(t_stack **stack_a, t_stack **stack_b);
+void	stack_sorter(t_stack **stack_a, t_stack **stack_b);
 //
 
 #endif

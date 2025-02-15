@@ -36,6 +36,46 @@ t_stack  *ft_lstlast(t_stack *lst)
         return (lst);
 }
 
+t_stack	*find_lstmin(t_stack *stack)
+{
+	long			min; 
+	t_stack	*min_node;
+
+	if (!stack)
+		return (NULL);
+	min = LONG_MAX;
+	while (stack)
+	{
+		if (stack->val < min)
+		{
+			min = stack->val;
+			min_node = stack;
+		}
+		stack = stack->next;
+	}
+	return (min_node); 
+}
+
+t_stack	*find_lstmax(t_stack *stack)
+{
+	long			max;
+	t_stack	*max_node;
+
+	if (!stack)
+		return (NULL);
+	max = LONG_MIN;
+	while (stack)
+	{
+		if (stack->val > max)
+		{
+			max = stack->val;
+			max_node = stack;
+		}
+		stack = stack->next;
+	}
+	return (max_node);
+}
+
 int	ft_lstsize(t_stack *lst)
 {
 	int	lcount;
@@ -57,15 +97,15 @@ int	check_sort(t_stack *lst)
 		return (-1);
 	while (lst->next)
 	{
-		printf("testing value lst->val: '%d' and lst->next->val: '%d'\n",lst->val,lst->next->val);
+		//printf("testing value lst->val: '%d' and lst->next->val: '%d'\n",lst->val,lst->next->val);
 		if (lst->val > lst->next->val)
 		{
-			printf("lst->val: '%d' is < to lst->next->val: '%d', so lst is not sorted\n",lst->val,lst->next->val);
+			//printf("lst->val: '%d' is < to lst->next->val: '%d', so lst is not sorted\n",lst->val,lst->next->val);
 			return (1);
 		}
 		lst = lst->next;
 	}
-	printf("lst is sorted\n");
+	//printf("lst is sorted\n");
 	return (-1);
 }
 
@@ -78,7 +118,8 @@ t_stack  *ft_lstnew(int content)
                 return (newn = NULL, NULL);
         newn->val = content;
         newn->next = NULL;
-	newn->prev = NULL;
+	newn->cheapest = 0;
+	//newn->prev = NULL;
         return (newn);
 }
 
@@ -93,6 +134,7 @@ void    ft_lstadd_back(t_stack **lst, t_stack *new)
         {
 		printf("first node doesnt exist, value assigned first val\n");
                 lst[0] = new;
+		new->prev = NULL;
                 return ;
         }
         else
