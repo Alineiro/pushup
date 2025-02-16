@@ -30,3 +30,15 @@ void	print_array(int *nums, int size)
 		i++;
 	}
 }
+
+void	exit_cleanup(int *nums, t_stack *stack_a, t_stack *stack_b)
+{
+	if (nums)
+		free(nums);
+	if (stack_a)
+		ft_lstclear(&stack_a);
+	if (stack_b)
+		ft_lstclear(&stack_b);
+	write(1, "Error\n", 6);
+	exit(EXIT_FAILURE);
+}

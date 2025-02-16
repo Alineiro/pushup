@@ -37,16 +37,8 @@ void	set_cheapest_node(t_stack *stack)
 			cheapest_value = stack->cost;
 			cheapest_node = stack;
 		}
-		/*else
-		{
-			cheapest_node = stack;
-			cheapest_node->cheapest = 0;
-		}*/
 		stack = stack->next;
 	}
-	//THERES A HIGH CHANCE THIS BREAKS THE PROGRAM BECAUSE OF UNINITIALIZED
-	//VALUES, CHANGE IT TO A BOOLEAN, OR FIND A WAY TO INITIALIZE ALL TO 0,
-	//(WHILE MAKING SURE THE ACTUAL CHEAPEST IS SET TO 1).
 	cheapest_node->cheapest = true;
 }
 
@@ -76,19 +68,19 @@ void	put_min_on_top(t_stack **stack_a)
 
 void	push_prep(t_stack **stack, t_stack *cheapest, char stack_id)
 {
-	printf("val of node passed to prep: '%d'\n",cheapest->val);
+	//printf("val of node passed to prep: '%d'\n",cheapest->val);
 	while (*stack != cheapest)
 	{
 		if (stack_id == 'a')
 		{
 			if (cheapest->median == true)
 			{
-				printf("stack_id = 'a' && above_median true\n");
+				//printf("stack_id = 'a' && above_median true\n");
 				ra(stack, true);
 			}
 			else
 			{
-				printf("stack_id = 'a' && above_median false\n");
+				//printf("stack_id = 'a' && above_median false\n");
 				rra(stack, true);
 			}
 		}
@@ -96,12 +88,12 @@ void	push_prep(t_stack **stack, t_stack *cheapest, char stack_id)
 		{
 			if (cheapest->median == true)
 			{
-				printf("stack_id = 'b' && above_median true\n");
+				//printf("stack_id = 'b' && above_median true\n");
 				rb(stack, true);
 			}
 			else
 			{
-				printf("stack_id = 'b' && above_median false\n");
+				//printf("stack_id = 'b' && above_median false\n");
 				rrb(stack, true);
 			}
 		}
@@ -125,7 +117,6 @@ void	move_a_to_b(t_stack **stack_a, t_stack **stack_b)
 void	move_b_to_a(t_stack **stack_a, t_stack **stack_b)
 {
 	push_prep(stack_a, (*stack_b)->target, 'a');
-	//printf("about to do pa: a-nbr: '%d', b->nbr: '%d'\n",stack_a->val,stack_b->val);
 	pa(stack_a, stack_b, true);
 }
 
@@ -149,38 +140,37 @@ void	stack_sorter(t_stack **stack_a, t_stack **stack_b)
 	len_a = ft_lstsize(*stack_a);
 	if (len_a-- > 3 && check_sort(*stack_a) == 1)
 	{
-		printf("first condition stack_sorter condition is triggered\n");
+		//printf("first condition stack_sorter condition is triggered\n");
 		pb(stack_b, stack_a, true);
 	}
 	if (len_a-- > 3 && check_sort(*stack_a) == 1)
 	{
-		printf("second condition stack_sorter condition is triggered\n");
+		//printf("second condition stack_sorter condition is triggered\n");
 		pb(stack_b, stack_a, true);
 	}
 	while (len_a-- > 3 && check_sort(*stack_a) == 1)
 	{
-		printf("loop condition stack_sorter condition is triggered\n");
+		//printf("loop condition stack_sorter condition is triggered\n");
 		init_nodes_stack_a(*stack_a, *stack_b);
 		move_a_to_b(stack_a, stack_b);
 	}
-	printf("len condtions end and threesort is called, both lists are printed before\n");
+	/*printf("len condtions end and threesort is called, both lists are printed before\n");
 	ft_print_lst(*stack_a);
 	printf("\n\n");
-	ft_print_lst(*stack_b);
+	ft_print_lst(*stack_b);*/
 	three_sort(stack_a);
-	printf("\nprinting stack_a after sorting\n");
-	ft_print_lst(*stack_a);
+	//printf("\nprinting stack_a after sorting\n");
+	//ft_print_lst(*stack_a);
 	while (*stack_b)
 	{
-		printf("loop condition of b condition stack_sorter condition is triggered\n");
+		//printf("loop condition of b condition stack_sorter condition is triggered\n");
 		init_nodes_stack_b(*stack_a, *stack_b);
 		move_b_to_a(stack_a, stack_b);
 	}
-	printf("printing both lists before finishing\n");
+	/*printf("printing both lists before finishing\n");
 	ft_print_lst(*stack_a);
 	printf("\n\n");
-	ft_print_lst(*stack_b);
-	//
+	ft_print_lst(*stack_b);*/
 	get_idx_median(*stack_a);
 	put_min_on_top(stack_a);
 }

@@ -6,7 +6,7 @@ void	ft_lstdelone(t_stack *lst)
 		return ;
 	if (lst)
 	{
-		printf("Val of deleted node is: '%d'\n",(int)lst->val);
+		//printf("Val of deleted node is: '%d'\n",(int)lst->val);
 		free(lst);
 	}
 }
@@ -119,7 +119,6 @@ t_stack  *ft_lstnew(int content)
         newn->val = content;
         newn->next = NULL;
 	newn->cheapest = 0;
-	//newn->prev = NULL;
         return (newn);
 }
 
@@ -132,14 +131,14 @@ void    ft_lstadd_back(t_stack **lst, t_stack *new)
                 return ;
         if (!lst[0])
         {
-		printf("first node doesnt exist, value assigned first val\n");
+		//printf("first node doesnt exist, value assigned first val\n");
                 lst[0] = new;
 		new->prev = NULL;
                 return ;
         }
         else
         {
-		printf("val assigned to last node\n");
+		//printf("val assigned to last node\n");
                 last = ft_lstlast(*lst);
                 last->next = new;
 		new->prev = last;

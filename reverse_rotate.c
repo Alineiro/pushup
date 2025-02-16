@@ -43,7 +43,7 @@ void	rrr(t_stack **a, t_stack **b, bool print_check)
 
 void	r_rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest)
 {
-	printf("rotate both function is called\n");
+	//printf("rotate both function is called\n");
 	while (*stack_b != cheapest->target && *stack_a != cheapest)
 		rrr(stack_a, stack_b, true);
 	get_idx_median(*stack_a);
