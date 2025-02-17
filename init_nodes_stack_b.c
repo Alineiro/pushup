@@ -21,15 +21,9 @@ void	set_target_stack_b(t_stack *stack_a, t_stack *stack_b)
 			current_a = current_a->next;
 		}
 		if (best_idx == LONG_MAX)
-		{
 			stack_b->target = find_lstmin(stack_a);
-		//	printf("best idx == long_max target of stack_b is: %d\n",stack_b->target->val);
-		}
 		else
-		{
 			stack_b->target = target_node;
-		//	printf("else target of stack_b is: %d\n",stack_b->target->val);
-		}
 		stack_b = stack_b->next;
 	}
 }

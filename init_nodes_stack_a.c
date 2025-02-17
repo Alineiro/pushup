@@ -38,23 +38,12 @@ void	analyse_cost_stack_a(t_stack *stack_a, t_stack *stack_b)
 	while (stack_a)
 	{
 		stack_a->cost = stack_a->idx;
-	//	printf("val of a above_median bool: '%d'\n",stack_a->median);
-	//	printf("val of a target above_median bool: '%d'\n",stack_a->target->median);
 		if (stack_a->median == false)
-		{
-			//printf("stack_a above median found false\n");
 			stack_a->cost = len_a - (stack_a->idx);
-		}
 		if (stack_a->target->median == true)
-		{
-			//printf("stack_a target median is found to be true\n");
 			stack_a->cost += stack_a->target->idx;
-		}
 		else
-		{
-			//printf("stack_a aboe median true and target b above_median is false\n");
 			stack_a->cost += len_b - (stack_a->target->idx);
-		}
 		stack_a = stack_a->next;
 	}
 }

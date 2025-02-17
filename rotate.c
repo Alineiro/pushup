@@ -3,7 +3,7 @@
 void	rotate(t_stack **stack)
 {
 	t_stack	*last_node;
-	int				len;
+	int		len;
 
 	len = ft_lstsize(*stack);
 	if (stack == NULL || *stack == NULL || len == 1)
@@ -14,7 +14,7 @@ void	rotate(t_stack **stack)
 	(*stack)->prev = NULL;
 	last_node->next->prev = last_node;
 	last_node->next->next = NULL;
-}	
+}
 
 void	ra(t_stack **a, bool print_check)
 {
@@ -37,9 +37,9 @@ void	rr(t_stack **a, t_stack **b, bool print_check)
 	if (print_check == true)
 		write(1, "rr\n", 3);
 }
+
 void	rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest)
 {
-	//printf("normal rotate function is called\n");
 	while (*stack_b != cheapest->target && *stack_a != cheapest)
 		rr(stack_a, stack_b, true);
 	get_idx_median(*stack_a);
