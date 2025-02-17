@@ -154,10 +154,6 @@ void	stack_sorter(t_stack **stack_a, t_stack **stack_b)
 		init_nodes_stack_a(*stack_a, *stack_b);
 		move_a_to_b(stack_a, stack_b);
 	}
-	/*printf("len condtions end and threesort is called, both lists are printed before\n");
-	ft_print_lst(*stack_a);
-	printf("\n\n");
-	ft_print_lst(*stack_b);*/
 	three_sort(stack_a);
 	//printf("\nprinting stack_a after sorting\n");
 	//ft_print_lst(*stack_a);
@@ -167,10 +163,6 @@ void	stack_sorter(t_stack **stack_a, t_stack **stack_b)
 		init_nodes_stack_b(*stack_a, *stack_b);
 		move_b_to_a(stack_a, stack_b);
 	}
-	/*printf("printing both lists before finishing\n");
-	ft_print_lst(*stack_a);
-	printf("\n\n");
-	ft_print_lst(*stack_b);*/
 	get_idx_median(*stack_a);
 	put_min_on_top(stack_a);
 }

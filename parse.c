@@ -13,11 +13,6 @@ int	get_total_nums(char **av)
 	{
 		j = 0;
 		bol = 0;
-		if (!av[i][0])
-		{
-			i++;
-			continue ;
-		}
 		while (av[i][j])
 		{
 			if (av[i][j] != ' ')
@@ -34,6 +29,7 @@ int	get_total_nums(char **av)
 		}
 		i++;
 	}
+	//printf("total numbers: '%d'\n",total);
 	return (total);
 }
 
@@ -100,7 +96,7 @@ int	copy_args(char **av, int **nums)
 	i = 1;
 	total_nums = get_total_nums(av);
 	//printf("val of total_nums: '%d'\n",total_nums);
-	*nums = (int *)calloc((total_nums + 1), sizeof(int));
+	*nums = (int *)calloc((total_nums), sizeof(int));
 	if (!*nums)
 		return (-1);
 	while (av[i])

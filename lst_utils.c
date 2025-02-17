@@ -1,27 +1,16 @@
 #include "push_swap.h"
 
-void	ft_lstdelone(t_stack *lst)
-{
-	if (!lst)
-		return ;
-	if (lst)
-	{
-		//printf("Val of deleted node is: '%d'\n",(int)lst->val);
-		free(lst);
-	}
-}
-
 void	ft_lstclear(t_stack **lst)
 {
 	t_stack	*temp;
 	
 	temp = NULL;
-	if (!lst)
+	if (!lst || !lst[0])
 		return ;
 	while (*lst)
 	{
 		temp = (*lst)->next;
-		ft_lstdelone(*lst);
+		free(*lst);
 		*lst = temp;
 	}
 	*lst = NULL;
@@ -113,7 +102,8 @@ t_stack  *ft_lstnew(int content)
 {
         t_stack  *newn;
 
-        newn = (t_stack *)malloc(sizeof(t_stack));
+        //printf("enters in lstnew, val of content: '%d'\n",content);
+	newn = (t_stack *)malloc(sizeof(t_stack));
         if (!newn)
                 return (newn = NULL, NULL);
         newn->val = content;
@@ -129,10 +119,10 @@ void    ft_lstadd_back(t_stack **lst, t_stack *new)
         last = NULL;
         if (!new)
                 return ;
-        if (!lst[0])
+        if (!*lst)
         {
 		//printf("first node doesnt exist, value assigned first val\n");
-                lst[0] = new;
+                *lst = new;
 		new->prev = NULL;
                 return ;
         }
